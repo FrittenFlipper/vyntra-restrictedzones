@@ -3,7 +3,7 @@ game "gta5"
 lua54 "yes"
 
 author "toasty3920"
-description "Restricted zones script made by Vyntra Development"
+description "Restricted zones script for ESX allowing players to create restricted areas."
 version "1.0.0"
 
 client_scripts {
