@@ -13,7 +13,7 @@ A lightweight and optimized resource for FiveM that handles restricted zones and
 
 Before installing, ensure you have the following resources installed:
 
--   oxmysql (or mysql-async)
+-   oxmysql
 -   [ESX Legacy]
 
 ## Installation
