@@ -24,14 +24,14 @@ local function getNoZonesOptions()
     }
 end
 
-AddEventHandler('onResourceStart', function(resourceName)
+AddEventHandler("onResourceStart", function(resourceName)
     if (GetCurrentResourceName() ~= resourceName) then return end
     Wait(1000)
     TriggerEvent("vyntra-restrictedzones:client:refreshBlips")
 end)
 
-RegisterNetEvent('esx:playerLoaded')
-AddEventHandler('esx:playerLoaded', function(xPlayer)
+RegisterNetEvent("esx:playerLoaded")
+AddEventHandler("esx:playerLoaded", function(xPlayer)
     Wait(2000)
     TriggerEvent("vyntra-restrictedzones:client:refreshBlips")
 end)
@@ -124,13 +124,13 @@ end)
 function openMenu()
     ESX.UI.Menu.CloseAll()
 
-    ESX.UI.Menu.Open("default", GetCurrentResourceName(), 'main_menu', {
+    ESX.UI.Menu.Open("default", GetCurrentResourceName(), "main_menu", {
         title = Config.Labels.menu_title,
         align = "left",
         elements = getOptions()
     }, function(data, menu)
         if data.current.value == "create_zone" then
-            ESX.UI.Menu.Open("dialog", GetCurrentResourceName(), 'sub_dialog', {
+            ESX.UI.Menu.Open("dialog", GetCurrentResourceName(), "sub_dialog", {
                 title = Config.Labels.enter_title
             }, function(data2, menu2)
                 local title = data2.value
@@ -140,7 +140,7 @@ function openMenu()
                 end
                 menu2.close()
 
-                ESX.UI.Menu.Open("dialog", GetCurrentResourceName(), 'sub_dialog2', {
+                ESX.UI.Menu.Open("dialog", GetCurrentResourceName(), "sub_dialog2", {
                     title = Config.Labels.enter_desc
                 }, function(data3, menu3)
                     local description = data3.value
@@ -150,7 +150,7 @@ function openMenu()
                     end
                     menu3.close()
 
-                    ESX.UI.Menu.Open("dialog", GetCurrentResourceName(), 'sub_dialog3', {
+                    ESX.UI.Menu.Open("dialog", GetCurrentResourceName(), "sub_dialog3", {
                         title = string.format(Config.Labels.enter_radius, Config.Radius.min, Config.Radius.max)
                     }, function(data4, menu4)
                         local range = tonumber(data4.value)
@@ -166,7 +166,7 @@ function openMenu()
                             menu4.close()
                             local playerCoords = GetEntityCoords(PlayerPedId())
 
-                            TriggerServerEvent('vyntra-restrictedzones:server:insertZone', title, description,
+                            TriggerServerEvent("vyntra-restrictedzones:server:insertZone", title, description,
                                 playerCoords.x, playerCoords.y, playerCoords.z, range)
                             TriggerServerEvent("vyntra-restrictedzones:server:refreshBlips")
                             TriggerServerEvent("vyntra-restrictedzones:server:sendNotification", description)
