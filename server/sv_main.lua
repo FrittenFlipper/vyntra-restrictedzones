@@ -1,13 +1,11 @@
-RegisterCommand("restrictedzone", function(source, args, raw)
+RegisterCommand(Config.CommandName, function(source, args, raw)
     local src = source
     local xPlayer = ESX.GetPlayerFromId(src)
 
-    if xPlayer.job.name == "police" or xPlayer.job.name == "fib" then
+    if xPlayer and Config.AllowedJobs[xPlayer.job.name] then
         TriggerClientEvent("vyntra-restrictedzones:client:openMenu", src)
     else
-        -- Assuming 'b_notify' is your notification script
-        TriggerClientEvent('b_notify', src, "error", "Restricted Zones", "You do not have permission to access the menu!",
-            5000)
+        TriggerClientEvent('b_notify', src, "error", Config.Labels.notification_title, Config.Labels.no_perms, 5000)
     end
 end)
 
@@ -15,7 +13,7 @@ ESX.RegisterServerCallback('vyntra-restrictedzones:server:getActiveZones', funct
     local result   = MySQL.query.await('SELECT * FROM vyntra_restrictedzones')
     local zoneData = {}
 
-    if table.empty(result) then
+    if not result or #result == 0 then
         zoneData = nil
     else
         for i = 1, #result, 1 do
@@ -68,11 +66,3 @@ AddEventHandler('vyntra-restrictedzones:server:deleteZone', function(id)
 
     MySQL.query('DELETE FROM vyntra_restrictedzones WHERE id = ?', { id })
 end)
-
-function table.empty(self)
-    for _, _ in pairs(self) do
-        return false
-    end
-
-    return true
-end
