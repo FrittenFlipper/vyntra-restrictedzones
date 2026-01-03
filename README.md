@@ -1,5 +1,9 @@
 # vyntra-restrictedzones
 
+## Discord server:
+
+https://discord.gg/QM5Pkyn7y4
+
 A lightweight and optimized resource for FiveM that handles restricted zones and prohibited areas. This script allows players to, complete with database integration.
 
 ## Features
@@ -39,11 +43,11 @@ Follow these steps to install the resource on your server:
 
 ## Usage
 
-Once the script is running, the restricted zones defined in the code or database will be active. Players entering these zones without the required job/permission will receive a notification or face the configured consequences.
+Once the script is running, the restricted zones defined in the code or database will be active.
 
 ## Troubleshooting
 
--   **Zones not appearing?** Check your server console (F8) for any SQL errors. Ensure the table from `restrictedzones.sql` exists in your database.
+-   **Zones not appearing?** Check your client console (F8) and server console for any errors. Ensure the table from `restrictedzones.sql` exists in your database.
 -   **Script errors:** Make sure you are using the correct framework version (ESX).
 
 ## Disclaimer
