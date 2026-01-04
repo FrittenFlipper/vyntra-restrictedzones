@@ -4,7 +4,7 @@ lua54 "yes"
 
 author "toasty3920"
 description "Restricted zones script for ESX allowing players to create restricted areas."
-version "1.0.0"
+version "1.0.1"
 
 client_scripts {
     "client/cl_main.lua",

@@ -24,6 +24,10 @@ local function getNoZonesOptions()
     }
 end
 
+local function isInvalid(str)
+    return str == nil or str == "" or str:match("^%s*$")
+end
+
 AddEventHandler("onResourceStart", function(resourceName)
     if (GetCurrentResourceName() ~= resourceName) then return end
     Wait(1000)
@@ -126,7 +130,7 @@ function openMenu()
 
     ESX.UI.Menu.Open("default", GetCurrentResourceName(), "main_menu", {
         title = Config.Labels.menu_title,
-        align = "left",
+        align = "top-left",
         elements = getOptions()
     }, function(data, menu)
         if data.current.value == "create_zone" then
@@ -134,20 +138,22 @@ function openMenu()
                 title = Config.Labels.enter_title
             }, function(data2, menu2)
                 local title = data2.value
-                -- FIX: Check for nil AND empty string
-                if title == nil or title == "" then
+
+                if isInvalid(title) then
                     return ESX.ShowNotification(Config.Labels.missing_title)
                 end
+
                 menu2.close()
 
                 ESX.UI.Menu.Open("dialog", GetCurrentResourceName(), "sub_dialog2", {
                     title = Config.Labels.enter_desc
                 }, function(data3, menu3)
                     local description = data3.value
-                    -- FIX: Check for nil AND empty string
-                    if description == nil or description == "" then
+
+                    if isInvalid(description) then
                         return ESX.ShowNotification(Config.Labels.missing_desc)
                     end
+
                     menu3.close()
 
                     ESX.UI.Menu.Open("dialog", GetCurrentResourceName(), "sub_dialog3", {
@@ -181,7 +187,7 @@ function openMenu()
                 if not zoneData or #zoneData == 0 then
                     ESX.UI.Menu.Open("default", GetCurrentResourceName(), "no_zones_menu", {
                         title = Config.Labels.active_zones_title,
-                        align = "left",
+                        align = "top-left",
                         elements = getNoZonesOptions(),
                     }, function(data2, menu2) menu2.close() end, function(data2, menu2) menu2.close() end)
                 else
@@ -196,13 +202,13 @@ function openMenu()
 
                     ESX.UI.Menu.Open("default", GetCurrentResourceName(), "active_zones_menu", {
                         title = Config.Labels.active_zones_title,
-                        align = "left",
+                        align = "top-left",
                         elements = activeZones,
                     }, function(data3, menu3)
                         if data3.current.value == "view_zone" then
                             ESX.UI.Menu.Open("default", GetCurrentResourceName(), "view_zone_confirm", {
                                 title = Config.Labels.delete_confirm,
-                                align = "left",
+                                align = "top-left",
                                 elements = getSubOptions(),
                             }, function(data4, menu4)
                                 if data4.current.value == "yes_delete" then
